@@ -1,0 +1,11 @@
+fastapi
+uvicorn
+pydantic
+sqlalchemy
+httpx
+pytest
+fastapi-users
+python-dotenv
+agentic-framework
+pymysql
+psycopg2-binary

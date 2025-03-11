@@ -1,0 +1,16 @@
+{
+    "cSpell.words": [
+        "agentic",
+        "autoflush",
+        "dbname",
+        "fastapi",
+        "httpx",
+        "psycopg",
+        "pydantic",
+        "pymysql",
+        "pytest",
+        "sessionmaker",
+        "sqlalchemy",
+        "uvicorn"
+    ]
+}
