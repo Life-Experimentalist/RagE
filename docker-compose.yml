@@ -6,11 +6,29 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - .:/app
+      - ./app:/app/app
+      - ./data:/app/data
     environment:
       - ENV=development
+      - EMBEDDER_HOST=pathway
+      - EMBEDDER_PORT=8000
+      - LLM_HOST=pathway
+      - LLM_PORT=8001
     depends_on:
       - db
+      - pathway
+
+  pathway:
+    build:
+      context: .
+      dockerfile: Dockerfile.pathway
+    ports:
+      - "8001:8000"
+      - "8002:8001"
+    volumes:
+      - ./data:/app/data
+    environment:
+      - DEBUG=True
 
   db:
     image: postgres:latest

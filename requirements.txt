@@ -6,6 +6,11 @@ httpx
 pytest
 fastapi-users
 python-dotenv
-agentic-framework
 pymysql
 psycopg2-binary
+jinja2
+python-multipart
+pathway
+sentence-transformers
+# Remove the unavailable package as it doesn't exist in PyPI
+# pathway-client==0.9.0

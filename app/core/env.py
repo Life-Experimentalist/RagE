@@ -11,7 +11,11 @@ class DatabaseSettings(BaseSettings):
     DB_PASSWORD: Optional[str] = None
     DB_NAME: Optional[str] = None
 
-    model_config = {"env_file": ".env"}
+    model_config = {
+        "env_file": ".env",
+        "env_prefix": "",  # No prefix, we use explicit variable names
+        "extra": "ignore",  # Allow extra fields from env
+    }
 
     def get_connection_url(self) -> str:
         """Generate database connection URL based on the database type"""
@@ -40,14 +44,21 @@ class AppSettings(BaseSettings):
     PORT: int = 8000
     ENV: str = "development"
 
-    model_config = {"env_file": ".env"}
+    model_config = {
+        "env_file": ".env",
+        "env_prefix": "",  # No prefix, we use explicit variable names
+        "extra": "ignore",  # Allow extra fields from env
+    }
 
 
 class Settings(BaseSettings):
     app: AppSettings = AppSettings()
     database: DatabaseSettings = DatabaseSettings()
 
-    model_config = {"env_file": ".env"}
+    model_config = {
+        "env_file": ".env",
+        "extra": "ignore",  # Allow extra fields from env
+    }
 
 
 # Single instance to be imported by other modules

@@ -1,28 +1,43 @@
-# FastAPI Agentic Project
+# RagE - Insurance Policy Analysis Engine
 
 ## Overview
-The FastAPI Agentic Project is a web application built using FastAPI that incorporates the Agentic framework. This project aims to provide a robust and scalable API with optional add-ons for extended functionality.
+RagE (Retrieval Augmented Generation Engine) is an intelligent system designed specifically for the insurance industry. It leverages FastAPI and retrieval-augmented generation to help insurance professionals and customers quickly find, understand, and analyze insurance policies, claims procedures, and coverage details.
 
-## Features
-- FastAPI for high-performance web applications.
-- Modular architecture with clear separation of concerns.
-- Dependency injection for better testing and maintainability.
-- Optional add-ons to enhance the application's capabilities.
-- Comprehensive documentation and API reference.
+## Key Features
+- **Policy Document Analysis**: Upload and analyze insurance policy documents
+- **Natural Language Queries**: Ask questions about policies in plain English
+- **Coverage Comparison**: Compare different policies and their coverage details
+- **Claims Assistance**: Get guidance on claims procedures and requirements
+- **Regulatory Compliance**: Stay updated with insurance regulations and compliance requirements
+
+## Technical Architecture
+- **FastAPI Backend**: High-performance API framework
+- **RAG Pipeline**: Enhanced document retrieval and analysis
+- **Vector Database**: Efficient semantic search for insurance-specific content
+- **Multi-Database Support**: Works with PostgreSQL, MySQL, SQLite
+- **Responsive UI**: Clean, modern interface for all devices
+
+## Why RAG for Insurance?
+Insurance documents are dense, complex, and filled with specialized terminology. Traditional search approaches often fail to capture the nuanced relationships between insurance concepts. Our RAG system:
+
+- Understands insurance-specific terminology and concepts
+- Provides accurate answers by retrieving relevant policy sections
+- Reduces time spent searching through lengthy policy documents
+- Ensures responses are grounded in actual policy language
+- Helps both insurance professionals and customers understand complex coverage details
 
 ## Getting Started
-To get started with the FastAPI Agentic Project, follow the instructions in the [Getting Started](docs/getting_started.md) documentation.
 
 ### Prerequisites
-- Python 3.7 or higher
+- Python 3.8 or higher
 - pip (Python package installer)
 - Docker (optional, for containerization)
 
 ### Installation
 1. Clone the repository:
    ```
-   git clone https://github.com/yourusername/fastapi-agentic-project.git
-   cd fastapi-agentic-project
+   git clone https://github.com/yourusername/RagE.git
+   cd RagE
    ```
 
 2. Install the required dependencies:
@@ -40,35 +55,16 @@ To get started with the FastAPI Agentic Project, follow the instructions in the 
    uvicorn app.main:app --reload
    ```
 
-## Directory Structure
-```
-fastapi-agentic-project
-├── app                # Main application code
-├── agentic            # Agentic framework integration
-├── addons             # Optional add-ons
-├── tests              # Unit tests
-├── docs               # Documentation
-├── .env.example       # Example environment variables
-├── .gitignore         # Git ignore file
-├── TODO.md            # TODO list
-├── Dockerfile         # Docker configuration
-├── docker-compose.yml  # Docker Compose configuration
-├── requirements.txt   # Python dependencies
-└── pyproject.toml     # Project metadata
-```
+5. In a separate terminal, run the Pathway pipeline:
+   ```
+   python pathway_pipeline.py
+   ```
 
-## Documentation
-For detailed documentation, please refer to the [docs](docs/index.md) directory, which includes:
-- API Reference: [api_reference.md](docs/api_reference.md)
-- Getting Started: [getting_started.md](docs/getting_started.md)
-- Architecture: [architecture.md](docs/architecture.md)
+6. Open your browser and navigate to:
+   ```
+   http://localhost:8000
+   ```
 
-## Contributing
-Contributions are welcome! Please read the [TODO.md](TODO.md) for a list of features and improvements that can be made.
+## API Usage
 
-## License
-This project is licensed under the MIT License. See the LICENSE file for more details.
-
-## Acknowledgments
-- FastAPI for its excellent framework.
-- The Agentic framework for providing a powerful structure for agent-based applications.
+### Query the RAG System

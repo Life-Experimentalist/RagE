@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RagE - Documentation</title>
+    <link rel="stylesheet" href="/static/style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>RagE Documentation</h1>
+      <nav>
+        <a href="/">Home</a>
+      </nav>
+    </header>
+
+    <main class="docs-container">
+      <section>
+        <h2>About RAG</h2>
+        <p>
+          Retrieval-Augmented Generation (RAG) is a technique that enhances
+          large language models by retrieving relevant information from a
+          knowledge base before generating responses.
+        </p>
+        <p>
+          This approach improves accuracy and ensures up-to-date information.
+        </p>
+      </section>
+
+      <section>
+        <h2>API Documentation</h2>
+        <h3>Query the RAG System</h3>
+        <pre><code>POST /api/rag/query
+{
+    "query": "Your question here",
+    "max_results": 3
+}</code></pre>
+
+        <h3>Add Documents</h3>
+        <pre><code>POST /api/rag/documents
+{
+    "documents": [
+        {
+            "content": "Document text content",
+            "source": "Source information"
+        }
+    ]
+}</code></pre>
+      </section>
+    </main>
+
+    <footer>
+      <p>&copy; 2023 RagE - Retrieval Augmented Generation Engine</p>
+    </footer>
+  </body>
+</html>

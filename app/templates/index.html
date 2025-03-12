@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RagE - Insurance Policy Analysis</title>
+    <link rel="stylesheet" href="/static/style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>RagE</h1>
+      <p>Insurance Policy Analysis Engine</p>
+    </header>
+
+    <main>
+      <section class="search-container">
+        <div class="search-box">
+          <input
+            type="text"
+            id="query"
+            placeholder="Ask about your insurance policy..."
+          />
+          <button id="search-button">Search</button>
+        </div>
+        <div class="search-examples">
+          <p>Example queries:</p>
+          <ul>
+            <li>
+              <a href="#" class="example-query"
+                >What is my deductible for water damage?</a
+              >
+            </li>
+            <li>
+              <a href="#" class="example-query"
+                >Does this policy cover flood damage?</a
+              >
+            </li>
+            <li>
+              <a href="#" class="example-query"
+                >How do I file a claim for theft?</a
+              >
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="results-container" id="results">
+        <!-- Results will be displayed here -->
+      </section>
+
+      <section class="upload-container">
+        <h2>Add Insurance Documents</h2>
+        <div class="form-group">
+          <label for="document-type">Document Type:</label>
+          <select id="document-type">
+            <option value="policy">Insurance Policy</option>
+            <option value="claim">Claim Form</option>
+            <option value="endorsement">Policy Endorsement</option>
+            <option value="declaration">Declarations Page</option>
+            <option value="other">Other Document</option>
+          </select>
+        </div>
+        <textarea
+          id="document-content"
+          placeholder="Paste insurance document content here..."
+        ></textarea>
+        <input
+          type="text"
+          id="document-source"
+          placeholder="Policy Number or Document Title"
+        />
+        <button id="add-document-button">Add Document</button>
+      </section>
+    </main>
+
+    <footer>
+      <p>&copy; 2023 RagE - Insurance Policy Analysis Engine</p>
+    </footer>
+
+    <script>
+      // Add click handlers for example queries
+      document.querySelectorAll(".example-query").forEach((item) => {
+        item.addEventListener("click", (e) => {
+          e.preventDefault();
+          document.getElementById("query").value = e.target.textContent;
+          document.getElementById("search-button").click();
+        });
+      });
+
+      document
+        .getElementById("search-button")
+        .addEventListener("click", async () => {
+          const query = document.getElementById("query").value;
+          if (!query.trim()) return;
+
+          try {
+            const resultsDiv = document.getElementById("results");
+            resultsDiv.innerHTML =
+              '<div class="loading">Analyzing policy documents...</div>';
+
+            const response = await fetch("/api/rag/query", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                query: query,
+                max_results: 3,
+              }),
+            });
+
+            const data = await response.json();
+
+            let policyInfoHtml = "";
+            if (data.policy_info) {
+              const pInfo = data.policy_info;
+              policyInfoHtml = `
+                        <div class="policy-info">
+                            <h4>Policy Information</h4>
+                            <p><strong>Type:</strong> ${
+                              pInfo.policy_type || "Unknown"
+                            }</p>
+                            ${
+                              pInfo.policy_number
+                                ? `<p><strong>Policy Number:</strong> ${pInfo.policy_number}</p>`
+                                : ""
+                            }
+                        </div>
+                    `;
+            }
+
+            resultsDiv.innerHTML = `
+                    <div class="result">
+                        <h3>Analysis Result</h3>
+                        <p>${data.response}</p>
+                        ${policyInfoHtml}
+                        <h4>Sources</h4>
+                        <ul>
+                            ${data.sources
+                              .map((source) => `<li>${source}</li>`)
+                              .join("")}
+                        </ul>
+                    </div>
+                `;
+          } catch (error) {
+            console.error("Error:", error);
+            document.getElementById(
+              "results"
+            ).innerHTML = `<div class="error">Error: ${error.message}</div>`;
+          }
+        });
+
+      document
+        .getElementById("add-document-button")
+        .addEventListener("click", async () => {
+          const content = document.getElementById("document-content").value;
+          const source =
+            document.getElementById("document-source").value ||
+            "Unnamed Policy";
+          const docType = document.getElementById("document-type").value;
+
+          if (!content.trim()) return;
+
+          try {
+            const response = await fetch("/api/rag/documents", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                documents: [
+                  {
+                    content: content,
+                    source: source,
+                    policy_type: docType,
+                  },
+                ],
+              }),
+            });
+
+            const data = await response.json();
+            alert(`Added ${data.added} insurance document(s) successfully!`);
+
+            // Clear inputs
+            document.getElementById("document-content").value = "";
+            document.getElementById("document-source").value = "";
+          } catch (error) {
+            console.error("Error:", error);
+            alert(`Error adding insurance document: ${error.message}`);
+          }
+        });
+    </script>
+  </body>
+</html>
